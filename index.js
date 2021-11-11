@@ -17,11 +17,48 @@ mongoose
   .then(self => {
     console.log(`Connected to the database: "${self.connection.name}"`);
     // Before adding any recipes to the database, let's remove all existing ones
-    return Recipe.deleteMany()
+   // return Recipe.deleteMany()
+   return self.connection.dropDatabase();
   })
   .then(() => {
     // Run your code here, after you have insured that the connection was made
+   let newRecipe = {
+      title: 'Curry Rice',
+      level: 'Easy Peasy',
+      ingredients: ['curry','rice'],
+      cuisine: 'native',
+      dishType: 'main_course',
+      duration: 20,
+      creator: 'consuela',
+      created:''
+    }
+    return Recipe.create(newRecipe)
   })
-  .catch(error => {
-    console.error('Error connecting to the database', error);
-  });
+  
+  
+    
+    .then((result) => {
+     return  Recipe.insertMany(data)
+     
+}
+
+    
+    )
+  .then((update) => {
+    return Recipe.updateOne({title: 'Rigatoni alla Genovese'}, {duration:100})
+  })
+  .then((remove) => {
+    return Recipe.deleteOne({ title: 'Carrot Cake' })
+  })
+
+  .then((closeData) => {
+    mongoose.connection.close()
+  })
+  
+
+  
+    
+  
+   .catch(error => {
+    console.log('Error connecting to the database', error);
+   });
